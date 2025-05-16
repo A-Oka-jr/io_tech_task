@@ -1,7 +1,8 @@
 import { Provider } from 'react-redux';
 import { store } from '../redux/store';
 import '../styles/globals.css';
-import Navbar from '@/components/layout/Navbar';
+import Navbar from '@/components/layout/Layout';
+import '/i18n'
 
 function MyApp({ Component, pageProps }) {
   return (
