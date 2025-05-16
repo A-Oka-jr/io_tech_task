@@ -1,7 +1,7 @@
-import { Provider } from 'react-redux'
-import { store } from '../redux/store'
-import '../styles/globals.css'
-import Navbar from '@/components/layout/Navbar'
+import { Provider } from 'react-redux';
+import { store } from '../redux/store';
+import '../styles/globals.css';
+import Navbar from '@/components/layout/Navbar';
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -9,7 +9,7 @@ function MyApp({ Component, pageProps }) {
       <Navbar />
       <Component {...pageProps} />
     </Provider>
-  )
+  );
 }
 
-export default MyApp
+export default MyApp;
