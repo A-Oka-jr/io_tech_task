@@ -1,12 +1,12 @@
-import Navbar from './Navbar'
-import HeroCarousel from './HeroCarousel'
+import Navbar from "./Navbar";
+import Hero from "./Hero";
 
 export default function Layout({ children }) {
   return (
     <div>
       <Navbar />
-      <HeroCarousel />
+      <Hero />
       <main>{children}</main>
     </div>
-  )
+  );
 }

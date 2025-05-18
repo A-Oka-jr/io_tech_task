@@ -46,9 +46,9 @@ export default function Navbar() {
       <div className="flex items-center flex-shrink-0 mr-8">
         <Link href="/">
           <img
-            src="/profile.png"
+            src="/logo.png"
             alt="Logo"
-            className="h-10 w-10 rounded-full bg-white object-cover shadow"
+            className="h-10 w-10 rounded-lg bg-white object-cover shadow"
           />
         </Link>
       </div>
@@ -92,7 +92,7 @@ export default function Navbar() {
               </div>
             )}
           </div>
-          <Link className="text-white hover:text-blue-400" href="/blog">
+          <Link className="text-white hover:text-blue-400" href="/blogs">
             {t("blog")}
           </Link>
           <Link className="text-white hover:text-blue-400" href="/team">
