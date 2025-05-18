@@ -5,44 +5,37 @@ import axios from "axios";
 import TeamMember from "../components/TeamMember";
 import TestimonialSlider from "../components/TestimonialSlider";
 
-const testimonials = [
-  {
-    img: "/profile.png",
-    text:
-      '"With the help of the hospitable staff of Al Safar and Partners I was able to get my work done without any hassle. The help I received helped me a great deal to overcome the issues that I faced. I was always updated about my case and my queries never went unanswered."',
-    name: "Mohammed Saif",
-    title: "CEO/Company",
-  },
-  {
-    img: "/profile.png",
-    text:
-      '"The team was extremely professional and supportive throughout the process. I highly recommend their services to anyone in need of expert advice."',
-    name: "Sarah Ahmed",
-    title: "Manager/Business",
-  },
-  {
-    img: "/profile.png",
-    text:
-      '"Excellent service and great communication. They made everything easy and stress-free for me."',
-    name: "John Doe",
-    title: "Entrepreneur",
-  },
-];
-
 const Team = () => {
   const { t, i18n } = useTranslation();
   const [teamMembers, setTeamMembers] = useState([]);
+  const [testimonials, setTestimonials] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:1337/api/teams?populate=profile")
-      .then((res) => {
-        console.log(res.data.data);
-        setTeamMembers(res.data.data);
-      })
-      .catch((err) => {
-        console.error("Error fetching team members:", err);
-      });
+    const fetchTeamMembers = async () => {
+      axios
+        .get("http://localhost:1337/api/teams?populate=profile")
+        .then((res) => {
+          setTeamMembers(res.data.data);
+        })
+        .catch((err) => {
+          console.error("Error fetching team members:", err);
+        });
+    };
+
+    const fetchTestimonials = async () => {
+      axios
+        .get("http://localhost:1337/api/testimonials?populate=img")
+        .then((res) => {
+          console.log(res.data.data);
+          setTestimonials(res.data.data);
+        })
+        .catch((err) => {
+          console.error("Error fetching testimonials:", err);
+        });
+    };
+
+    fetchTeamMembers();
+    fetchTestimonials();
   }, []);
 
   return (
@@ -51,7 +44,8 @@ const Team = () => {
         {t("ourTeam") || "Our Team"}
       </h1>
       <p className="text-gray-600 max-w-2xl text-center mb-10">
-        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+       {t("teamDescription") ||
+        "We are a team of dedicated professionals with a passion for excellence. Our diverse backgrounds and expertise allow us to deliver exceptional results for our clients."}
       </p>
 
       {/* Team Members Grid */}
@@ -70,7 +64,15 @@ const Team = () => {
       </div>
 
       {/* Testimonials Slider */}
-      <TestimonialSlider testimonials={testimonials} lang={i18n.language} />
+      {testimonials.length > 0 ? (
+          <TestimonialSlider testimonials={testimonials} lang={i18n.language} />
+      ) : (
+        <p className="text-center text-gray-500 text-lg mt-10">
+          {i18n.language.startsWith("ar")
+            ? t("Loading")
+            : "Loading testimonials..."}
+        </p>
+      )}
     </div>
   );
 };

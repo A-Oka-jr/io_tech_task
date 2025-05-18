@@ -6,5 +6,16 @@
   "team": "Our Team",
   "contact": "Contact Us",
   "welcome": "Welcome to My Site!",
-  "OwerTeam": "Our Team"
+  "ourTeam": "Our Team",
+  "testimonials": {
+    "sectionTitle": "What our clients are saying",
+    "description": "Our clients range from individual investors to local, international, and Fortune 500 companies.",
+    "defaultText": "Text",
+    "defaultName": "name",
+    "defaultJobTitle": "Job title",
+    "clientAlt": "Client",
+    "prev": "Previous",
+    "next": "Next"
+  },
+  "teamDescription":"We are a team of dedicated professionals with a passion for excellence. Our diverse backgrounds and expertise allow us to deliver exceptional results for our clients."
 }
