@@ -1,11 +1,14 @@
 import { FaTwitter, FaFacebookF, FaGooglePlusG } from "react-icons/fa";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
+import { useSelector } from 'react-redux';
 
 export default function Footer() {
   const { t } = useTranslation();
+  const lang = useSelector((state) => state.language.lang);
+  
   return (
-    <footer className="bg-[#4B2615] text-white py-8 px-4 ">
+    <footer className="bg-[#4B2615] text-white py-8 px-4" dir={lang === 'ar' ? 'rtl' : 'ltr'}>
       <div className="max-w-7xl mx-auto flex flex-col items-center">
         <div className="w-full flex flex-col md:flex-row items-center justify-center md:justify-between mb-4">
           <div className="flex items-center gap-6">
@@ -30,7 +33,7 @@ export default function Footer() {
         </div>
         <hr className="w-full border-t border-[#e0cfc2] mb-4" />
         <div className="w-full flex flex-col md:flex-row items-center justify-between text-xs text-[#e0cfc2]">
-          <div className="flex flex-wrap gap-6 mb-2 md:mb-0">
+          <div className="flex flex-wrap gap-6 mb-2 md:mb-0" style={{ flexDirection: lang === 'ar' ? 'row-reverse' : 'row' }}>
             <Link href={"/about"} className="hover:underline cursor-pointer">
               {t("about" || "About")}
             </Link>
@@ -47,9 +50,8 @@ export default function Footer() {
               {t("services" || "services")}
             </Link>
           </div>
-          <div className="text-right">
-            © {new Date().getFullYear()}.{" "}
-            {t("AllRightsReserved" || "All Rights Reserved")}
+          <div className={lang === 'ar' ? "text-left" : "text-right"}>
+            © {new Date().getFullYear()}. {t("AllRightsReserved")}
           </div>
         </div>
       </div>
