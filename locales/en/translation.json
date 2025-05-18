@@ -17,12 +17,15 @@
     "prev": "Previous",
     "next": "Next"
   },
-  "teamDescription":"We are a team of dedicated professionals with a passion for excellence. Our diverse backgrounds and expertise allow us to deliver exceptional results for our clients.",
-  "SocialResponsibility":"Social Responsibility",
-  "OurAdvantages":"Our Advantages",
-  "OurStrategy":"Our Strategy",
-  "AllRightsReserved":"All rights reserved",
-  "subscribe":"Subscribe",
-  "email":"Email",
-  "BookAppointment":"Book an appointment"
+  "teamDescription": "We are a team of dedicated professionals with a passion for excellence. Our diverse backgrounds and expertise allow us to deliver exceptional results for our clients.",
+  "SocialResponsibility": "Social Responsibility",
+  "OurAdvantages": "Our Advantages",
+  "OurStrategy": "Our Strategy",
+  "AllRightsReserved": "All rights reserved",
+  "subscribe": "Subscribe",
+  "email": "Email",
+  "BookAppointment": "Book an appointment",
+  "readMore": "Read More",
+  "previousSlide": "Previous slide",
+  "goToSlide": "Go to slide"
 }

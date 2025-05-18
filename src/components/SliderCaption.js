@@ -3,7 +3,7 @@ import axios from "axios";
 import { useTranslation } from "react-i18next";
 
 export default function SliderCaption() {
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
   const [active, setActive] = useState(0);
   const [captions, setCaptions] = useState([]);
 
@@ -28,17 +28,14 @@ export default function SliderCaption() {
   }, [captions]);
 
   useEffect(() => {
-    if (i18n.language === "ar") {
-      document.body.dir = "rtl";
-    } else {
-      document.body.dir = "ltr";
-    }
+    document.body.dir = i18n.language === "ar" ? "rtl" : "ltr";
     return () => {
       document.body.dir = "ltr";
     };
   }, [i18n.language]);
 
   if (captions.length === 0) return null;
+
   const lang = i18n.language || "en";
   const currentCaption = captions[active];
   const title =
@@ -47,59 +44,57 @@ export default function SliderCaption() {
 
   return (
     <>
-      <div
-        className={`absolute inset-0 flex items-center z-20`}
-        style={{ pointerEvents: "none" }}
-      >
+      <div className="absolute inset-0 flex items-center z-20 pointer-events-none">
         <div
-          className={`max-w-xl text-white flex flex-col ${
+          className={`max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl xl:max-w-3xl w-full text-white flex flex-col ${
             lang === "ar"
-              ? "absolute right-0 mr-[8vw] text-right items-end"
-              : "ml-[8vw] text-left items-start"
-          }`}
-          style={{ pointerEvents: "auto" }}
+              ? "absolute right-0 mr-[4vw] md:mr-[8vw] text-right items-end"
+              : "ml-[4vw] md:ml-[8vw] text-left items-start"
+          } px-4 md:px-0 pointer-events-auto space-y-4 md:space-y-6`}
         >
           <h2
-            className="text-5xl font-bold mb-6 animate-fade-in drop-shadow-lg w-full"
+            className="font-bold animate-fade-in drop-shadow-lg w-full"
+            style={{
+              fontSize: "clamp(1.5rem, 5vw, 4rem)",
+            }}
             dir={lang === "ar" ? "rtl" : "ltr"}
           >
             {title}
           </h2>
           <p
-            className="text-lg mb-8 animate-fade-in delay-100 drop-shadow w-full"
+            className="text-base md:text-lg animate-fade-in delay-100 drop-shadow w-full"
             dir={lang === "ar" ? "rtl" : "ltr"}
           >
             {desc}
           </p>
           <button
-            className={`bg-white text-[#4B2615] px-8 py-3 rounded-lg font-semibold shadow hover:bg-[#e0cfc2] transition text-lg w-fit ${
-              lang === "ar" ? "self-start" : "self-start"
-            }`}
+            className="bg-white text-[#4B2615] px-6 md:px-8 py-2 md:py-3 rounded-lg font-semibold shadow hover:bg-[#e0cfc2] transition text-base md:text-lg w-fit"
+            style={{ alignSelf: "flex-start" }}
           >
-            {lang === "ar" ? "اقرأ المزيد" : "Read More"}
+            {t("readMore")}
           </button>
         </div>
       </div>
+
       <div
-        className={`absolute z-30 flex flex-col gap-3 ${
-          lang === "ar" ? "right-8" : "left-8"
-        } top-1/2 -translate-y-1/2`}
-        style={{ pointerEvents: "auto" }}
+        className={`absolute z-30 flex flex-col gap-2 md:gap-3 ${
+          lang === "ar" ? "right-4 md:right-8" : "left-4 md:left-8"
+        } top-1/2 -translate-y-1/2 pointer-events-auto`}
       >
         <button
-          className="mb-6 text-white text-3xl rounded-full p-2 :hover:cursor-pointer"
+          className="mb-4 md:mb-6 text-white text-2xl md:text-3xl rounded-full p-2 md:p-3"
           style={{ alignSelf: "center" }}
           onClick={() =>
             setActive((prev) => (prev - 1 + captions.length) % captions.length)
           }
-          aria-label={lang === "ar" ? "الشريحة السابقة" : "Previous caption"}
+          aria-label={lang === "ar" ? t("previousSlide") : t("previousSlide")}
         >
           {lang === "ar" ? "\u003E" : "\u003C"}
         </button>
         {captions.map((_, idx) => (
           <button
             key={idx}
-            className={`w-3 h-3 rounded-full border-2 ${
+            className={`w-2 h-2 md:w-3 md:h-3 rounded-full border-2 ${
               active === idx
                 ? "bg-white border-white"
                 : "border-white bg-transparent"
@@ -107,8 +102,8 @@ export default function SliderCaption() {
             onClick={() => setActive(idx)}
             aria-label={
               lang === "ar"
-                ? `اذهب إلى الشريحة ${idx + 1}`
-                : `Go to slide ${idx + 1}`
+                ? `${t("goToSlide")} ${idx + 1}`
+                : `${t("goToSlide")} ${idx + 1}`
             }
           />
         ))}

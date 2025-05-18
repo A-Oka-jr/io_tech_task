@@ -2,9 +2,10 @@ import { FaWhatsapp } from "react-icons/fa";
 import { MdPhoneInTalk, MdOutlineEmail } from "react-icons/md";
 
 const TeamMember = ({ member, lang }) => {
-
   const name = lang.startsWith("ar") ? member?.name_ar : member?.name_en;
-  const position = lang.startsWith("ar") ? member?.position_ar : member?.position_en;
+  const position = lang.startsWith("ar")
+    ? member?.position_ar
+    : member?.position_en;
 
   const imageUrl = member?.profile?.url
     ? `http://localhost:1337${member.profile.url}`
