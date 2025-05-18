@@ -1,7 +1,9 @@
 import { FaWhatsapp } from "react-icons/fa";
 import { MdPhoneInTalk, MdOutlineEmail } from "react-icons/md";
+import { useSelector } from 'react-redux';
 
-const TeamMember = ({ member, lang }) => {
+const TeamMember = ({ member }) => {
+  const lang = useSelector((state) => state.language.lang);
   const name = lang.startsWith("ar") ? member?.name_ar : member?.name_en;
   const position = lang.startsWith("ar")
     ? member?.position_ar

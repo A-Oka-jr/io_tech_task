@@ -3,6 +3,8 @@ import { useTranslation } from "react-i18next";
 import { useState, useRef, useEffect } from "react";
 import { FiSearch } from "react-icons/fi";
 import axios from "axios";
+import { useDispatch, useSelector } from 'react-redux';
+import { setLanguage } from '../../redux/languageSlice';
 
 export default function Navbar() {
   const { t, i18n } = useTranslation();
@@ -11,10 +13,14 @@ export default function Navbar() {
   const [services, setServices] = useState([]);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const servicesRef = useRef(null);
+  const dispatch = useDispatch();
+  const lang = useSelector((state) => state.language.lang);
 
   const changeLang = (lng) => {
+    dispatch(setLanguage(lng));
     i18n.changeLanguage(lng);
-    document.documentElement.dir = lng === "ar" ? "rtl" : "ltr";
+    localStorage.setItem('lang', lng);
+    document.documentElement.dir = lng === 'ar' ? 'rtl' : 'ltr';
   };
 
   useEffect(() => {
