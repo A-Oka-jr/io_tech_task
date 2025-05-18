@@ -2,11 +2,13 @@ import Link from "next/link";
 import { useTranslation } from "react-i18next";
 import { useState, useRef, useEffect } from "react";
 import { FiSearch } from "react-icons/fi";
+import axios from "axios";
 
 export default function Navbar() {
   const { t, i18n } = useTranslation();
   const [showSearch, setShowSearch] = useState(false);
   const [showServices, setShowServices] = useState(false);
+  const [services, setServices] = useState([]);
   const servicesRef = useRef(null);
 
   const changeLang = (lng) => {
@@ -16,18 +18,31 @@ export default function Navbar() {
 
   useEffect(() => {
     if (!showServices) return;
+    const fetchServices = async () => {
+      try {
+        const res = await axios.get("http://localhost:1337/api/services");
+        setServices(res.data.data);
+      } catch (err) {
+        console.error("Failed to fetch services", err);
+      }
+    };
+
+    fetchServices();
+  }, [showServices]);
+
+  useEffect(() => {
+    if (!showServices) return;
     function handleClick(e) {
       if (servicesRef.current && !servicesRef.current.contains(e.target)) {
         setShowServices(false);
       }
     }
-    document.addEventListener("mousedown", handleClick, true); // use capture phase
+    document.addEventListener("mousedown", handleClick, true);
     return () => document.removeEventListener("mousedown", handleClick, true);
   }, [showServices]);
 
   return (
     <nav className="fixed top-0 left-0 w-full flex items-center h-16 z-10 bg-transparent px-8">
-      {/* Logo on the top left */}
       <div className="flex items-center flex-shrink-0 mr-8">
         <Link href="/">
           <img
@@ -60,35 +75,20 @@ export default function Navbar() {
             </button>
             {showServices && (
               <div
-                className="fixed left-0 right-0 top-20 mx-auto bg-[#4B2615] text-white rounded-b-2xl shadow-lg py-10 px-16 w-full max-w-[98vw] z-50 flex flex-col md:flex-row gap-16 border border-[#4B2615] text-base"
+                className="fixed left-0 right-0 top-20 mx-auto bg-[#4B2615] text-white rounded-b-2xl shadow-lg py-10 px-16 w-full max-w-[98vw] z-50 flex flex-wrap gap-10 border border-[#4B2615] text-base"
                 style={{ borderTopLeftRadius: 0, borderTopRightRadius: 0 }}
               >
-                <div className="flex flex-col gap-6 min-w-[260px]">
-                  <span>Legal Consultation Services</span>
-                  <span>Foreign Investment Services</span>
-                  <span>Contracts</span>
-                  <span>Notarization</span>
-                  <span>Insurance</span>
-                </div>
-                <div className="flex flex-col gap-6 min-w-[260px]">
-                  <span>--------- and Defense in All Cases</span>
-                  <span>Banks and Financial Institutions</span>
-                  <span>Corporate Governance Services</span>
-                  <span>Companies Liquidation</span>
-                  <span>Internal Regulations for Companies</span>
-                </div>
-                <div className="flex flex-col gap-6 min-w-[260px]">
-                  <span>Services for Companies and Institutions</span>
-                  <span>Arbitration</span>
-                  <span>Intellectual Property</span>
-                  <span>Corporate Restructuring and Reorganization</span>
-                </div>
-                <div className="flex flex-col gap-6 min-w-[260px]">
-                  <span>Establishing National and Foreign Companies</span>
-                  <span>Commercial Agencies</span>
-                  <span>Supporting Vision 2030</span>
-                  <span>Estates</span>
-                </div>
+                {services.map((service) => (
+                  <Link
+                    key={service.documentId}
+                    href={`/services/${service.documentId}`}
+                    className="hover:text-blue-400 transition"
+                  >
+                    {i18n.language === "ar"
+                      ? service.title_ar
+                      : service.title_en}
+                  </Link>
+                ))}
               </div>
             )}
           </div>
